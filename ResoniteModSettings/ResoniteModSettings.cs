@@ -15,8 +15,8 @@ namespace ResoniteModSettings
     {
         public override string Name => "ResoniteModSettings";
         public override string Author => "badhaloninja";
-        public override string Version => "1.4.0";
-        public override string Link => "https://github.com/badhaloninja/ResoniteModSettings";
+        public override string Version => "1.4.1";
+        public override string Link => "https://github.com/stiefeljackal/ResoniteModSettings";
 
         [AutoRegisterConfigKey]
         private static readonly ModConfigurationKey<float> ITEM_HEIGHT = new("itemHeight", "Determines height of config items like this one. You need to click on another page for it to apply.", () => 24);
