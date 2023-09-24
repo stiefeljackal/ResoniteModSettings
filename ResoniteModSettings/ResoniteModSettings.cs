@@ -295,7 +295,7 @@ namespace ResoniteModSettings
                 ui.Style.PreferredWidth = 64f;
 
 
-                Uri githubMark = new("Resonitedb:///0c2ea8c328f68cc70eaa017a17cda0533895f1bbaa8764db9646770cd1b1a0b4.png");
+                Uri githubMark = new("resdb:///0c2ea8c328f68cc70eaa017a17cda0533895f1bbaa8764db9646770cd1b1a0b4.png");
                 Slot ghBtn = ui.Image(githubMark).Slot;
                 ghBtn.AttachComponent<Hyperlink>().URL.Value = new Uri(Current.Link);
                 ghBtn.AttachComponent<Button>(); // There does not appear to be a UiBuilder func to make a button out of a sprite, only ones to put a sprite on a button
