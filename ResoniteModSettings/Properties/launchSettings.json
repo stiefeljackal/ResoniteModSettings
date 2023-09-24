@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Launch Resonite": {
+      "commandName": "Executable",
+      "executablePath": "$(ResonitePath)Resonite.exe",
+      "commandLineArgs": "-Screen -Invisible -LoadAssembly \"Libraries/ResoniteModLoader.dll\" -DontAutoOpenCloudHome -Config Config.json",
+      "workingDirectory": "$(ResonitePath)"
+    },
+    "Launch Resonite in VR": {
+      "commandName": "Executable",
+      "executablePath": "$(ResonitePath)Resonite.exe",
+      "commandLineArgs": "-Invisible -LoadAssembly \"Libraries/ResoniteModLoader.dll\" -DontAutoOpenCloudHome -Config Config.json",
+      "workingDirectory": "$(ResonitePath)"
+    }
+  }
+}

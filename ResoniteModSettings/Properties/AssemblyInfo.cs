@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NeosModSettings")]
+[assembly: AssemblyTitle("ResoniteModSettings")]
 [assembly: AssemblyDescription("Adds a dash screen to edit mod configs")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("badhaloninja")]
-[assembly: AssemblyProduct("NeosModSettings")]
+[assembly: AssemblyProduct("ResoniteModSettings")]
 [assembly: AssemblyCopyright("Copyright © badhaloninja 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

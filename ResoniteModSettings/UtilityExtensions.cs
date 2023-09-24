@@ -1,10 +1,10 @@
 ﻿using System;
 using FrooxEngine;
 using FrooxEngine.UIX;
-using BaseX;
+using Elements.Core;
 using System.Reflection;
 
-namespace NeosModSettings
+namespace ResoniteModSettings
 {
     public static class UtilityExtensions
     {

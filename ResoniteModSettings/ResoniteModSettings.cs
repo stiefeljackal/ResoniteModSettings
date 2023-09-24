@@ -1,22 +1,22 @@
 ﻿using FrooxEngine;
 using FrooxEngine.UIX;
-using BaseX;
+using Elements.Core;
 using HarmonyLib;
-using NeosModLoader;
+using ResoniteModLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace NeosModSettings
+namespace ResoniteModSettings
 {
     // Maybe consider to split into a partial class
-    public class NeosModSettings : NeosMod
+    public class ResoniteModSettings : ResoniteMod
     {
-        public override string Name => "NeosModSettings";
+        public override string Name => "ResoniteModSettings";
         public override string Author => "badhaloninja";
         public override string Version => "1.4.0";
-        public override string Link => "https://github.com/badhaloninja/NeosModSettings";
+        public override string Link => "https://github.com/badhaloninja/ResoniteModSettings";
 
         [AutoRegisterConfigKey]
         private static readonly ModConfigurationKey<float> ITEM_HEIGHT = new("itemHeight", "Determines height of config items like this one. You need to click on another page for it to apply.", () => 24);
@@ -70,10 +70,10 @@ namespace NeosModSettings
             });
         //
 
-        private static NeosModSettings Current;
+        private static ResoniteModSettings Current;
         private static ModConfiguration Config;
         private static RadiantDashScreen CurrentScreen;
-        private static readonly Dictionary<string, NeosModBase> configuredModList = new();
+        private static readonly Dictionary<string, ResoniteModBase> configuredModList = new();
 
         private static Slot configKeysRootSlot;
         private static Slot modButtonsRoot;
@@ -81,8 +81,8 @@ namespace NeosModSettings
         private static readonly MethodInfo generateConfigFieldMethod = typeof(ModSettingsScreen).GetMethod(nameof(ModSettingsScreen.GenerateConfigField));
         private static readonly MethodInfo fireConfigurationChangedEventMethod = typeof(ModConfiguration).GetMethod("FireConfigurationChangedEvent", BindingFlags.NonPublic | BindingFlags.Instance);
 
-        internal static readonly string _internalConfigUpdateLabel = "NeosModSettings Edit Value";
-        internal static readonly string _internalConfigResetLabel = "NeosModSettings Config Reset";
+        internal static readonly string _internalConfigUpdateLabel = "ResoniteModSettings Edit Value";
+        internal static readonly string _internalConfigResetLabel = "ResoniteModSettings Config Reset";
 
         private static readonly Dictionary<ModConfigurationKey, string> ConfigKeyVariableNames = new(){
             { SHOW_NAMES, "Config/_showFullName" },
@@ -101,7 +101,7 @@ namespace NeosModSettings
             ModConfiguration.OnAnyConfigurationChanged += OnConfigurationChanged;
             Config.OnThisConfigurationChanged += OnThisConfigurationChanged;
 
-            Harmony harmony = new("me.badhaloninja.NeosModSettings");
+            Harmony harmony = new("me.badhaloninja.ResoniteModSettings");
             harmony.PatchAll();
         }
 
@@ -129,7 +129,7 @@ namespace NeosModSettings
 
                 //if (dash.GetScreen<RadiantDashScreen>(screen => screen.Name == "NML") != null) return;
 
-                CurrentScreen = dash.AttachScreen("NML", color.Orange, NeosAssets.Graphics.Icons.Dash.Tools);
+                CurrentScreen = dash.AttachScreen("RML", colorX.Orange, OfficialAssets.Graphics.Icons.Dash.Tools);
                 
                 Slot screenSlot = CurrentScreen.Slot;
                 screenSlot.OrderOffset = 256; // Settings Screen is 60, Exit screen is set to int.MaxValue 
@@ -145,7 +145,7 @@ namespace NeosModSettings
 
                 ui.NestInto(left); // Mod List
                 left.Slot.AttachComponent<Image>()
-                    .Tint.Value = new color(0.05f, 0.75f);
+                    .Tint.Value = new colorX(0.05f, 0.75f);
 
                 ui.HorizontalFooter(56f, out RectTransform modsFooter, out RectTransform modsContent);
                 ui.NestInto(modsFooter);
@@ -269,7 +269,7 @@ namespace NeosModSettings
             }
             private static void BuildInfoPage(UIBuilder ui, out RectTransform content)
             {
-                Slot descRoot = ui.Next("Info"); // New Slot for the NeosModSettings info
+                Slot descRoot = ui.Next("Info"); // New Slot for the ResoniteModSettings info
                 ui.Nest();
 
                 ui.HorizontalFooter(100f, out RectTransform footer, out RectTransform body);
@@ -282,7 +282,7 @@ namespace NeosModSettings
 
                 ui.Spacer(45f);
                 ui.Style.PreferredHeight = 250f;
-                string Desc = "NeosModSettings is a modification to the base game that allows the users to directly interact with the mods that they have installed onto their game from inside the application.\n\nCurrently only supports configs that are valid DynamicValueVariable types and those of type Type meaning <b>Arrays are not supported</b> <size=30%>including any other collections</size>";
+                string Desc = "ResoniteModSettings is a modification to the base game that allows the users to directly interact with the mods that they have installed onto their game from inside the application.\n\nCurrently only supports configs that are valid DynamicValueVariable types and those of type Type meaning <b>Arrays are not supported</b> <size=30%>including any other collections</size>";
                 ui.Text(Desc, alignment: Alignment.MiddleCenter);
 
 
@@ -295,7 +295,7 @@ namespace NeosModSettings
                 ui.Style.PreferredWidth = 64f;
 
 
-                Uri githubMark = new("neosdb:///0c2ea8c328f68cc70eaa017a17cda0533895f1bbaa8764db9646770cd1b1a0b4.png");
+                Uri githubMark = new("Resonitedb:///0c2ea8c328f68cc70eaa017a17cda0533895f1bbaa8764db9646770cd1b1a0b4.png");
                 Slot ghBtn = ui.Image(githubMark).Slot;
                 ghBtn.AttachComponent<Hyperlink>().URL.Value = new Uri(Current.Link);
                 ghBtn.AttachComponent<Button>(); // There does not appear to be a UiBuilder func to make a button out of a sprite, only ones to put a sprite on a button
@@ -329,8 +329,8 @@ namespace NeosModSettings
             {
                 RadiantUI_Constants.SetupDefaultStyle(ui);
                 ui.Style.PreferredHeight = 90f;
-                List<NeosModBase> mods = ModLoader.Mods().ToList();
-                List<NeosModBase> configuredMods = mods.Where(m => m.GetConfiguration() != null).ToList(); // Get all mods with configs
+                List<ResoniteModBase> mods = ModLoader.Mods().ToList();
+                List<ResoniteModBase> configuredMods = mods.Where(m => m.GetConfiguration() != null).ToList(); // Get all mods with configs
                     
 
 
@@ -340,7 +340,7 @@ namespace NeosModSettings
                     dVar.VariableName.Value = "Config/SelectedMod";
                 }
                 bool flag = configuredModList.Count == 0;
-                foreach (NeosModBase mod in configuredMods)
+                foreach (ResoniteModBase mod in configuredMods)
                 {
                     int configCount = mod.GetConfiguration().ConfigurationItemDefinitions
                         .Where(c => (Config.GetValue(SHOW_INTERNAL) || !c.InternalAccessOnly) &&
@@ -392,7 +392,7 @@ namespace NeosModSettings
                 configKeysRootSlot.TryWriteDynamicValue("Config/SelectedMod.Version", "");
                 configKeysRootSlot.TryWriteDynamicValue<Uri>("Config/SelectedMod.Uri", null);
 
-                if (string.IsNullOrWhiteSpace(SelectedMod) || !configuredModList.TryGetValue(SelectedMod, out NeosModBase mod) || mod == null)
+                if (string.IsNullOrWhiteSpace(SelectedMod) || !configuredModList.TryGetValue(SelectedMod, out ResoniteModBase mod) || mod == null)
                     return; // Skip if no mod is selected
 
                 // Set footer values
@@ -592,7 +592,7 @@ namespace NeosModSettings
                 ui.Nest();
                 var text = ui.Text("🗘");
 
-                if (configKey.InternalAccessOnly) text.Color.Value = color.FromHexCode("#c44");
+                if (configKey.InternalAccessOnly) text.Color.Value = colorX.FromHexCode("#c44");
 
                 ui.NestOut();
                 ui.NestOut();
@@ -651,7 +651,7 @@ namespace NeosModSettings
             {
                 Debug("Save All Configs");
                 int errCount = 0;
-                foreach (NeosModBase mod in configuredModList.Values)
+                foreach (ResoniteModBase mod in configuredModList.Values)
                 { // Iterate over every mod with configs
                     Debug($"Saving Config for {mod.Name}");
                     try
@@ -692,7 +692,7 @@ namespace NeosModSettings
             private static void SaveCurrentConfig(IButton button, ButtonEventData data)
             {
                 button.Slot.TryReadDynamicValue("Config/SelectedMod", out string selectedMod);
-                if (string.IsNullOrWhiteSpace(selectedMod) || !configuredModList.TryGetValue(selectedMod, out NeosModBase mod) || mod == null)
+                if (string.IsNullOrWhiteSpace(selectedMod) || !configuredModList.TryGetValue(selectedMod, out ResoniteModBase mod) || mod == null)
                     return;
 
                 button.LabelText = "Saving"; // Saves so fast this might be unnecessary 
@@ -723,7 +723,7 @@ namespace NeosModSettings
             private static void ResetCurrentConfig(IButton button, ButtonEventData data)
             {
                 button.Slot.TryReadDynamicValue("Config/SelectedMod", out string selectedMod);
-                if (string.IsNullOrWhiteSpace(selectedMod) || !configuredModList.TryGetValue(selectedMod, out NeosModBase mod) || mod == null)
+                if (string.IsNullOrWhiteSpace(selectedMod) || !configuredModList.TryGetValue(selectedMod, out ResoniteModBase mod) || mod == null)
                     return;
                 var config = mod.GetConfiguration();
 
