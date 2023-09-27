@@ -15,7 +15,7 @@ namespace ResoniteModSettings
     {
         public override string Name => "ResoniteModSettings";
         public override string Author => "badhaloninja";
-        public override string Version => "1.4.1";
+        public override string Version => "2.0.0";
         public override string Link => "https://github.com/stiefeljackal/ResoniteModSettings";
 
         [AutoRegisterConfigKey]
